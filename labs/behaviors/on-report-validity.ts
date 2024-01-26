@@ -197,7 +197,12 @@ export function mixinOnReportValidity<
         this[privateIsSelfReportingValidity] ||
         isFirstInvalidControlInForm(this[internals].form, this)
       ) {
-        this.focus();
+        // Note:CG - we do not focus here. This is a breaking change of the original
+        // which always focus the element when calling reportValidity()
+        // TODO : this should be removed when we use a better (native) approach to 
+        // error reporting 
+        return 
+        // this.focus();
       }
     }
 
