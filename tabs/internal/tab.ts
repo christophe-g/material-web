@@ -64,6 +64,18 @@ export class Tab extends tabBaseClass {
     this.active = active;
   }
 
+
+  /**
+   * The URL that the tab points to.
+   */
+  @property() href = '';
+
+  /**
+   * Where to display the linked `href` URL for a tab. Common options
+   * include `_blank` to open in a new tab.
+   */
+  @property() target: '_blank' | '_parent' | '_self' | '_top' | '' = '';
+
   /**
    * In SSR, set this to true when an icon is present.
    */
@@ -94,21 +106,34 @@ export class Tab extends tabBaseClass {
 
   protected override render() {
     const indicator = html`<div class="indicator"></div>`;
+    const content = html`<md-focus-ring part="focus-ring" inward .control=${this}></md-focus-ring>
+    <md-elevation part="elevation"></md-elevation>
+    <md-ripple .control=${this}></md-ripple>
+    <div
+      class="content ${classMap(this.getContentClasses())}"
+      role="presentation">
+      <slot name="icon" @slotchange=${this.handleIconSlotChange}></slot>
+      <slot @slotchange=${this.handleSlotChange}></slot>
+      ${this.fullWidthIndicator ? nothing : indicator}
+    </div>
+    ${this.fullWidthIndicator ? indicator : nothing}`
+
+    if(this.href) {
+      return html`<a
+        tabindex="-1"
+        style="color: inherit; text-decoration: none;"
+        class="button"
+        href=${this.href}
+        target=${this.target || nothing}
+        aria-selected=${this.active}>
+        ${content}
+      </a>`;
+    }
     return html`<div
       class="button"
       role="presentation"
       @click=${this.handleContentClick}>
-      <md-focus-ring part="focus-ring" inward .control=${this}></md-focus-ring>
-      <md-elevation part="elevation"></md-elevation>
-      <md-ripple .control=${this}></md-ripple>
-      <div
-        class="content ${classMap(this.getContentClasses())}"
-        role="presentation">
-        <slot name="icon" @slotchange=${this.handleIconSlotChange}></slot>
-        <slot @slotchange=${this.handleSlotChange}></slot>
-        ${this.fullWidthIndicator ? nothing : indicator}
-      </div>
-      ${this.fullWidthIndicator ? indicator : nothing}
+      ${content}
     </div>`;
   }
 
