@@ -82,7 +82,7 @@ export class TypeaheadController {
   /**
    * The timeout id from the current buffer's setTimeout
    */
-  private cancelTypeaheadTimeout = 0;
+  private cancelTypeaheadTimeout!: ReturnType<typeof setTimeout>;
   /**
    * If we are currently "typing"
    */
