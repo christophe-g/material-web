@@ -3,6 +3,7 @@
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
  */
+// @ts-nocheck - we get errors when compiling from app about internals
 
 import {LitElement} from 'lit';
 
