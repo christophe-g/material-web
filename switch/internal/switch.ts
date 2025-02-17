@@ -33,6 +33,7 @@ import {
   mixinFormAssociated,
 } from '../../labs/behaviors/form-associated.js';
 import {CheckboxValidator} from '../../labs/behaviors/validators/checkbox-validator.js';
+import { live } from 'lit/directives/live.js';
 
 // Separate variable needed for closure.
 const switchBaseClass = mixinDelegatesAria(
@@ -128,7 +129,7 @@ export class Switch extends switchBaseClass {
           type="checkbox"
           role="switch"
           aria-label=${(this as ARIAMixin).ariaLabel || nothing}
-          ?checked=${this.selected}
+          .checked=${live(this.selected)}
           ?disabled=${this.disabled}
           ?required=${this.required}
           @input=${this.handleInput}
