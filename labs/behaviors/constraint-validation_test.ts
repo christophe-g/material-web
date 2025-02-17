@@ -80,15 +80,15 @@ describe('mixinConstraintValidation()', () => {
     override render() {
       return html`<div id="root"></div>`;
     }
-    [createValidator]() {
+    override [createValidator]() {
       return new CustomErrorValidator(() => this);
     }
 
-    [getValidityAnchor]() {
+    override [getValidityAnchor]() {
       return this.shadowRoot?.querySelector<HTMLElement>('#root') ?? null;
     }
 
-    [getFormValue]() {
+    override [getFormValue]() {
       return String(this.value);
     }
   }
