@@ -375,6 +375,7 @@ export class Ripple extends LitElement implements Attachable {
   }
 
   private async endPressAnimation() {
+    // @ts-ignore - we have a conflict with tsconfig.exactOptionalPropertyTypes
     this.rippleStartEvent = undefined;
     this.state = State.INACTIVE;
     const animation = this.growAnimation;
